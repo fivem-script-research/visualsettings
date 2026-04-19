@@ -50,3 +50,18 @@ end
 Citizen.CreateThread(function()
     load_visual_settings("data/default_visualsettings.dat")
 end)
+
+RegisterCommand("visualsettings", function(source, args)
+    if #args < 1 then
+        chat:AddMessage("Usage: /visualsettings <file_name.dat> | reset")
+        return
+    end
+
+    if args[1] == "reset" then
+        load_visual_settings("data/default_visualsettings.dat")
+        return
+    end
+
+    local file_name = args[1]
+    load_visual_settings("data/" .. file_name)
+end, false)
