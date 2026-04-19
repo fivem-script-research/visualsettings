@@ -20,8 +20,11 @@ local function parse_visual_settings(file_content)
         end
     end
 
+    print("Parsed " .. #lines .. " lines")
+
     return settings
 end
+
 
 local function load_visual_settings(file_path)
     -- load the specified file into memory
@@ -34,8 +37,15 @@ local function load_visual_settings(file_path)
 
     -- parse the visual settings
     local visual_settings = parse_visual_settings(visual_settings_file)
-    print("Visual settings loaded successfully from: " .. file_path)
+
+    -- apply the visual settings
+    for setting, value in pairs(visual_settings) do
+        SetVisualSettingFloat(setting, value * 1.0)
+    end
+
+    print("Applied visual settings from " .. file_path)
 end
+
 
 Citizen.CreateThread(function()
     load_visual_settings("data/default_visualsettings.dat")
